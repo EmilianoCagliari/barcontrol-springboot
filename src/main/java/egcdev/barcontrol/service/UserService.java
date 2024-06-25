@@ -28,4 +28,9 @@ public class UserService implements IUserService {
     public User createUser(User user) {
         return null;
     }
+
+    @Override
+    public Integer deleteUser(Integer user_id) {
+        return 0;
+    }
 }
