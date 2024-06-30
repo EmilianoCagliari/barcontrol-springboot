@@ -6,6 +6,8 @@ import org.hibernate.sql.results.graph.entity.EntityResult;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.core.Authentication;
+import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
@@ -15,14 +17,14 @@ import java.util.List;
 import java.util.Map;
 
 @RestController
-@RequestMapping("/api/user")
+@RequestMapping("/users")
 public class UserController {
 
     @Autowired
     private IUserService userService;
 
 
-    @GetMapping()
+    @GetMapping("/")
     public String testUser(){
         return "Test UserController";
     }
@@ -48,5 +50,16 @@ public class UserController {
 
         return re;
     }
+
+    @GetMapping("/me")
+    public ResponseEntity<User> authenticatedUser() {
+
+        Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
+
+        User currentUser = (User) authentication.getPrincipal();
+
+        return ResponseEntity.ok(currentUser);
+    }
+
 
 }

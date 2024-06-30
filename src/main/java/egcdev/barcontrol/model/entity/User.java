@@ -2,63 +2,85 @@ package egcdev.barcontrol.model.entity;
 
 import egcdev.barcontrol.model.entity.enums.Roles;
 import jakarta.persistence.*;
+import org.hibernate.annotations.CreationTimestamp;
+import org.hibernate.annotations.UpdateTimestamp;
+import org.springframework.security.core.GrantedAuthority;
+import org.springframework.security.core.userdetails.UserDetails;
 
 import java.io.Serializable;
+import java.util.Collection;
 import java.util.Date;
+import java.util.List;
 
-@Entity
 @Table(name = "users")
-public class User implements Serializable {
-
-    private static final long serialVersionUID = -2185803412812655677L;
+@Entity
+public class User implements UserDetails {
 
     @Id
-    @Column
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    @GeneratedValue(strategy = GenerationType.AUTO)
+    @Column(nullable = false)
     private Integer id;
 
-    @Column
-    private String name;
-    @Column
-    private String surname;
-    @Column
+    @Column(nullable = false)
+    private String fullName;
+
+    @Column(unique = true, length = 100, nullable = false)
     private String email;
-    @Column
+
+    @Column(nullable = false)
     private String password;
+
     @Column
     private Integer role = Roles.User.getValue();
+
     @Column
     private Boolean isActive;
-    @Temporal(TemporalType.TIMESTAMP)
-    @Column
+
+    @CreationTimestamp
+    @Column(updatable = false, name = "created_at")
     private Date createdAt;
-    @Temporal(TemporalType.TIMESTAMP)
-    @Column
+
+    @UpdateTimestamp
+    @Column(name = "updated_at")
     private Date updatedAt;
 
+    @Override
+    public Collection<? extends GrantedAuthority> getAuthorities() {
+        return List.of();
+    }
+
+    @Override
+    public String getPassword() {
+        return password;
+    }
+
+    @Override
+    public String getUsername() {
+        return email;
+    }
+
+    @Override
+    public boolean isAccountNonExpired() {
+        return UserDetails.super.isAccountNonExpired();
+    }
+
+    @Override
+    public boolean isAccountNonLocked() {
+        return UserDetails.super.isAccountNonLocked();
+    }
+
+    @Override
+    public boolean isCredentialsNonExpired() {
+        return UserDetails.super.isCredentialsNonExpired();
+    }
+
+    @Override
+    public boolean isEnabled() {
+        return UserDetails.super.isEnabled();
+    }
 
     // Getters and setters
 
-
-    public User() {
-    }
-
-    public User(String email, String password) {
-        this.email = email;
-        this.password = password;
-    }
-
-    public User(Integer id, String name, String surname, String email, String password, Integer role, Boolean isActive, Date createdAt, Date updatedAt) {
-        this.id = id;
-        this.name = name;
-        this.surname = surname;
-        this.email = email;
-        this.password = password;
-        this.role = role;
-        this.isActive = isActive;
-        this.createdAt = createdAt;
-        this.updatedAt = updatedAt;
-    }
 
     public Integer getId() {
         return id;
@@ -68,20 +90,12 @@ public class User implements Serializable {
         this.id = id;
     }
 
-    public String getName() {
-        return name;
+    public String getFullName() {
+        return fullName;
     }
 
-    public void setName(String name) {
-        this.name = name;
-    }
-
-    public String getSurname() {
-        return surname;
-    }
-
-    public void setSurname(String surname) {
-        this.surname = surname;
+    public void setFullName(String fullName) {
+        this.fullName = fullName;
     }
 
     public String getEmail() {
@@ -90,10 +104,6 @@ public class User implements Serializable {
 
     public void setEmail(String email) {
         this.email = email;
-    }
-
-    public String getPassword() {
-        return password;
     }
 
     public void setPassword(String password) {
@@ -108,11 +118,11 @@ public class User implements Serializable {
         this.role = role;
     }
 
-    public Boolean getIsActive() {
+    public Boolean getActive() {
         return isActive;
     }
 
-    public void setIsActive(Boolean active) {
+    public void setActive(Boolean active) {
         isActive = active;
     }
 
@@ -130,21 +140,5 @@ public class User implements Serializable {
 
     public void setUpdatedAt(Date updatedAt) {
         this.updatedAt = updatedAt;
-    }
-
-
-    @Override
-    public String toString() {
-        return "User{" +
-                "id=" + id +
-                ", name='" + name + '\'' +
-                ", surname='" + surname + '\'' +
-                ", email='" + email + '\'' +
-                ", password='" + password + '\'' +
-                ", role=" + role +
-                ", isActive=" + isActive +
-                ", createdAt=" + createdAt +
-                ", updatedAt=" + updatedAt +
-                '}';
     }
 }

@@ -1,19 +1,21 @@
 spring:
   datasource:
-    url: jdbc:mariadb://localhost:3306/bar_control_test
+    url: jdbc:mariadb://localhost:3306/bar_control_spring
     username: root
     password:
     driver-class-name: org.mariadb.jdbc.Driver
   jpa:
     hibernate.ddl-auto: update
 
-  application:
-    name: barcontrol-server
+application:
+  name: barcontrol-server
 
-  security:
-    user:
-      name: admin
-      password: admin123
-
+security:
+  user:
+    name: admin
+    password: admin123
+  jwt:
+    secret-key: 155e2322e6e4c75a6ca1002cb66efe2bd7481c8f3f9ecd582d498f0053ef3547
+    expiration-time: 3600000
 server:
   port: 9999
