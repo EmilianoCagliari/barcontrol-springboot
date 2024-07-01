@@ -1,13 +1,16 @@
 package egcdev.barcontrol.model.responses;
 
 public class LoginResponse {
+
     private String token;
+
     private long expiresIn;
+
+    // Getters and setters...
+
     public String getToken() {
         return token;
     }
-    // Getters and setters...
-
 
     public void setToken(String token) {
         this.token = token;

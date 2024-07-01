@@ -15,5 +15,5 @@ public interface IUserService {
     /* Creación de usuario */
     User createUser( User user );
 
-    Integer deleteUser( Integer user_id);
+    Integer deleteUser( Integer id);
 }
