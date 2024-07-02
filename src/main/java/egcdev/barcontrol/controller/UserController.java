@@ -24,9 +24,9 @@ public class UserController {
     private IUserService userService;
 
 
-    @GetMapping("/")
+    @GetMapping()
     public String testUser(){
-        return "Test UserController";
+        return "Test UserController Success!";
     }
 
     @GetMapping("/getUsers")

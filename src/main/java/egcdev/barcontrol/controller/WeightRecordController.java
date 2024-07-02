@@ -1,24 +1,21 @@
 package egcdev.barcontrol.controller;
 
-
-import egcdev.barcontrol.service.interfaces.IBrandService;
+import egcdev.barcontrol.service.WeightRecordService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
 @RestController
-@RequestMapping("/brands")
-public class BrandController {
+@RequestMapping("/weight_record")
+public class WeightRecordController {
 
     @Autowired
-    private IBrandService brandService;
+    private WeightRecordService weightRecordService;
 
     @GetMapping()
-    public String testBrand() {
-        return "Test BrandController";
+    public String test() {
+        return "WeightRecord Controller test success!";
     }
-
-
 
 }

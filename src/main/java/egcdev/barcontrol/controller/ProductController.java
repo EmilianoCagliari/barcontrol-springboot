@@ -1,24 +1,22 @@
 package egcdev.barcontrol.controller;
 
-
-import egcdev.barcontrol.service.interfaces.IBrandService;
+import egcdev.barcontrol.service.ProductService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
 @RestController
-@RequestMapping("/brands")
-public class BrandController {
+@RequestMapping("/products")
+public class ProductController {
 
     @Autowired
-    private IBrandService brandService;
+    private ProductService productService;
 
     @GetMapping()
-    public String testBrand() {
-        return "Test BrandController";
+    public String test() {
+        return "Product Controller TEST SUCCESS!";
     }
-
 
 
 }
