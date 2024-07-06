@@ -1,27 +1,28 @@
 package egcdev.barcontrol.model.entity;
 
+
+import egcdev.barcontrol.model.entity.enums.RoleEnum;
 import jakarta.persistence.*;
 import org.hibernate.annotations.CreationTimestamp;
 import org.hibernate.annotations.UpdateTimestamp;
 
 import java.util.Date;
 
-@Table( name = "weight_record")
+@Table(name = "roles")
 @Entity
-public class WeightRecord {
+public class Role {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(nullable = false)
     private Integer id;
 
-    @ManyToOne
-    @JoinColumn(name = "product_id")
-    private Product product;
+    @Column(unique = true, nullable = false)
+    @Enumerated(EnumType.STRING)
+    private RoleEnum name;
 
-    @ManyToOne
-    @JoinColumn(name = "user_id")
-    private User user;
+    @Column(nullable = false)
+    private String description;
 
     @CreationTimestamp
     @Column(updatable = false, name = "created_at")
@@ -29,9 +30,11 @@ public class WeightRecord {
 
     @UpdateTimestamp
     @Column(name = "updated_at")
-    private Date updatedAt;
+    private Date updateAt;
 
-    public WeightRecord() {
+    // Getters and setters
+
+    public Role() {
     }
 
     public Integer getId() {
@@ -42,20 +45,20 @@ public class WeightRecord {
         this.id = id;
     }
 
-    public Product getProduct() {
-        return product;
+    public RoleEnum getName() {
+        return name;
     }
 
-    public void setProduct(Product product) {
-        this.product = product;
+    public void setName(RoleEnum name) {
+        this.name = name;
     }
 
-    public User getUser() {
-        return user;
+    public String getDescription() {
+        return description;
     }
 
-    public void setUser(User user) {
-        this.user = user;
+    public void setDescription(String description) {
+        this.description = description;
     }
 
     public Date getCreatedAt() {
@@ -66,11 +69,11 @@ public class WeightRecord {
         this.createdAt = createdAt;
     }
 
-    public Date getUpdatedAt() {
-        return updatedAt;
+    public Date getUpdateAt() {
+        return updateAt;
     }
 
-    public void setUpdatedAt(Date updatedAt) {
-        this.updatedAt = updatedAt;
+    public void setUpdateAt(Date updateAt) {
+        this.updateAt = updateAt;
     }
 }

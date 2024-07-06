@@ -1,10 +1,11 @@
 package egcdev.barcontrol.model.entity;
 
-import egcdev.barcontrol.model.entity.enums.Roles;
+import egcdev.barcontrol.model.entity.enums.RoleEnum;
 import jakarta.persistence.*;
 import org.hibernate.annotations.CreationTimestamp;
 import org.hibernate.annotations.UpdateTimestamp;
 import org.springframework.security.core.GrantedAuthority;
+import org.springframework.security.core.authority.SimpleGrantedAuthority;
 import org.springframework.security.core.userdetails.UserDetails;
 
 import java.util.Collection;
@@ -16,7 +17,7 @@ import java.util.List;
 public class User implements UserDetails {
 
     @Id
-    @GeneratedValue(strategy = GenerationType.AUTO)
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(nullable = false)
     private Integer id;
 
@@ -30,9 +31,6 @@ public class User implements UserDetails {
     private String password;
 
     @Column
-    private Integer role = Roles.User.getValue();
-
-    @Column
     private Boolean isActive;
 
     @CreationTimestamp
@@ -43,9 +41,15 @@ public class User implements UserDetails {
     @Column(name = "updated_at")
     private Date updatedAt;
 
+    @OneToOne( cascade = CascadeType.REMOVE)
+    @JoinColumn( name = "role_id", referencedColumnName = "id", nullable = false )
+    private Role role;
+
     @Override
     public Collection<? extends GrantedAuthority> getAuthorities() {
-        return List.of();
+        SimpleGrantedAuthority authority = new SimpleGrantedAuthority("ROLE_" + role.getName().toString() );
+
+        return List.of(authority);
     }
 
     @Override
@@ -109,14 +113,6 @@ public class User implements UserDetails {
         this.password = password;
     }
 
-    public Integer getRole() {
-        return role;
-    }
-
-    public void setRole(Integer role) {
-        this.role = role;
-    }
-
     public Boolean getActive() {
         return isActive;
     }
@@ -139,5 +135,15 @@ public class User implements UserDetails {
 
     public void setUpdatedAt(Date updatedAt) {
         this.updatedAt = updatedAt;
+    }
+
+    public Role getRole() {
+        return role;
+    }
+
+    public User setRole(Role role) {
+        this.role = role;
+
+        return this;
     }
 }
