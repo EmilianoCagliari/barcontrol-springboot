@@ -32,9 +32,10 @@ public class SecurityConfiguration {
     public SecurityFilterChain securityFilterChain(HttpSecurity http) throws Exception {
         http
                 .csrf(AbstractHttpConfigurer::disable) // Utiliza el método csrf(Consumer<CsrfConfigurer<HttpSecurity>> csrfConfigurer)
+                .cors(cors -> cors.configurationSource(corsConfigurationSource())) // Cors CONFIG
                 .authorizeHttpRequests(authorizeRequests ->
                         authorizeRequests
-                                .requestMatchers("/auth/**")
+                                .requestMatchers("/auth/**", "/test/**")
                                 .permitAll()
                                 .anyRequest()
                                 .authenticated()
@@ -53,7 +54,7 @@ public class SecurityConfiguration {
     CorsConfigurationSource corsConfigurationSource() {
         CorsConfiguration configuration = new CorsConfiguration();
 
-        configuration.setAllowedOrigins(List.of("http://localhost:8005"));
+        configuration.setAllowedOrigins(List.of("http://localhost:4200"));
         configuration.setAllowedMethods(List.of("GET", "POST"));
         configuration.setAllowedHeaders(List.of("Authorization", "Content-Type"));
 
