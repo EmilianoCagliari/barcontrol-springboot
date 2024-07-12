@@ -18,7 +18,7 @@ security:
     password: admin123
 
   jwt:
-    secret-key: 155e2322e6e4c75a6ca1002cb66efe2bd7481c8f3f9ecd582d498f0053ef3547
+    secret-key: ${JWT_SECRET_KEY}
     expiration-time: 3600000
 
   mqtt:
