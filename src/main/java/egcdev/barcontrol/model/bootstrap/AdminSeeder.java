@@ -33,9 +33,15 @@ public class AdminSeeder implements ApplicationListener<ContextRefreshedEvent> {
     private  void createSuperAdministrator() {
 
         RegisterUserDto userDto = new RegisterUserDto();
-        userDto.setFullName("Super Admin");
-        userDto.setEmail("super.admin@barcontrol.com");
-        userDto.setPassword("Admin123.");
+        userDto.setFullName(
+                System.getenv("SU_F_NAME")
+        );
+        userDto.setEmail(
+                System.getenv("SU_EMAIL")
+        );
+        userDto.setPassword(
+                System.getenv("SU_PASS")
+        );
 
         Optional<Role> optionalRole = this.roleRepository.findByName(RoleEnum.SUPER_ADMIN);
         Optional<User> optionalUser = this.userRepository.findByEmail(userDto.getEmail());
