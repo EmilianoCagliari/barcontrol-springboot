@@ -21,5 +21,10 @@ security:
     secret-key: 155e2322e6e4c75a6ca1002cb66efe2bd7481c8f3f9ecd582d498f0053ef3547
     expiration-time: 3600000
 
+  mqtt:
+    url: tcp://192.168.1.40:1883
+    topic-peso: sensor/peso
+    topic-status: device/status
+
 server:
   port: 9999
